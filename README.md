@@ -260,7 +260,7 @@ for i, age in enumerate(ages):
         if j == 0:  axes[i, j].set_ylabel(age)
         if i == len(ages) - 1:  axes[i, j].set_xlabel('Week')
             
-fig.suptitle('United Kingdom Deaths by Age and Sex');
+fig.suptitle('United Kingdom Deaths by Age and Sex')
 ```
 
 
