@@ -26,27 +26,14 @@ This file tabulates deaths by country, week for 2017 - 2020. Note that for some 
 
 ```python
 import pandas as pd
+from IPython.core.display import HTML
 
-pd.read_csv('../dataset/total_deaths.csv').head()
+HTML(pd.read_csv('../dataset/total_deaths.csv').head().to_html())
 ```
 
 
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -107,7 +94,6 @@ pd.read_csv('../dataset/total_deaths.csv').head()
     </tr>
   </tbody>
 </table>
-</div>
 
 
 
@@ -118,7 +104,6 @@ Some countries give larger granularity than simply total deaths. They might brea
 Note that each country usually doesn't have all combinations for all subgroups. For example, the UK breaks down deaths by age, and also by geography; but it doesn't break them down by age *and* geography.
 
 ```python
-from IPython.core.display import HTML
 from weekly_mort.collect import SUMMARY
 
 HTML(SUMMARY)
@@ -166,32 +151,14 @@ HTML(SUMMARY)
 The data is already in an easy-to-use format.
 
 ```python
-import pandas as pd
-import matplotlib.pyplot as plt
-import datetime
-
 df = pd.read_csv('../dataset/excess_deaths.csv')
 
-df.head()
+HTML(df.head().to_html())
 ```
 
 
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -264,21 +231,21 @@ df.head()
     </tr>
   </tbody>
 </table>
-</div>
 
 
 
 ```python
-uk = df[df.Country == 'United Kingdom']
+import matplotlib.pyplot as plt
+import datetime
 
+uk = df[df.Country == 'United Kingdom']
 uk = uk[(uk.Age != 'Total') & (uk.Region == 'Total') & (uk.Condition == 'Total')]
 
 uk.loc[uk.Age == 'Under 1 year', 'Age'] = '0-1'
-
-fig, axes = plt.subplots(7, 3, figsize=(15, 8), sharex=True, sharey='row')
-
 ages = list(uk.Age.unique())
 ages.sort()
+
+fig, axes = plt.subplots(7, 3, figsize=(15, 8), sharex=True, sharey='row')
 
 for i, age in enumerate(ages):
     for j, sex in enumerate(uk.Sex.unique()):
@@ -305,7 +272,6 @@ fig.suptitle('United Kingdom Deaths by Age and Sex');
 Week numbers differ by country: in the UK, the week ends on a Friday, in the Netherlands, on a Sunday. They also differ in how they treat the first week of the year.
 
 ```python
-import pandas as pd
 dates = pd.read_csv('../dataset/week_dates.csv')
 dates[dates.Week == 0]
 ```
@@ -332,31 +298,76 @@ dates[dates.Week == 0]
     <tr style="text-align: right;">
       <th></th>
       <th>Country</th>
+      <th>Year</th>
       <th>Week</th>
-      <th>Deaths2017</th>
-      <th>Deaths2018</th>
-      <th>Deaths2019</th>
-      <th>Deaths2020</th>
+      <th>Start</th>
+      <th>End</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>Netherlands</td>
+      <td>2017</td>
       <td>0</td>
-      <td>469.0</td>
-      <td>3343.0</td>
-      <td>2606.0</td>
-      <td>2242.0</td>
+      <td>2017-01-01</td>
+      <td>2017-01-01</td>
     </tr>
     <tr>
       <th>53</th>
-      <td>United Kingdom</td>
+      <td>Netherlands</td>
+      <td>2018</td>
       <td>0</td>
-      <td>11991.0</td>
-      <td>12723.0</td>
-      <td>10955.0</td>
-      <td>12254.0</td>
+      <td>2018-01-01</td>
+      <td>2018-01-07</td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td>Netherlands</td>
+      <td>2019</td>
+      <td>0</td>
+      <td>2019-01-01</td>
+      <td>2019-01-06</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>Netherlands</td>
+      <td>2020</td>
+      <td>0</td>
+      <td>2020-01-01</td>
+      <td>2020-01-05</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <td>United Kingdom</td>
+      <td>2017</td>
+      <td>0</td>
+      <td>2016-12-31</td>
+      <td>2017-01-06</td>
+    </tr>
+    <tr>
+      <th>265</th>
+      <td>United Kingdom</td>
+      <td>2018</td>
+      <td>0</td>
+      <td>2017-12-30</td>
+      <td>2018-01-05</td>
+    </tr>
+    <tr>
+      <th>318</th>
+      <td>United Kingdom</td>
+      <td>2019</td>
+      <td>0</td>
+      <td>2018-12-29</td>
+      <td>2019-01-04</td>
+    </tr>
+    <tr>
+      <th>371</th>
+      <td>United Kingdom</td>
+      <td>2020</td>
+      <td>0</td>
+      <td>2019-12-28</td>
+      <td>2020-01-03</td>
     </tr>
   </tbody>
 </table>
@@ -390,58 +401,52 @@ dates
     <tr style="text-align: right;">
       <th></th>
       <th>Country</th>
+      <th>Year</th>
       <th>Week</th>
-      <th>Deaths2017</th>
-      <th>Deaths2018</th>
-      <th>Deaths2019</th>
-      <th>Deaths2020</th>
+      <th>Start</th>
+      <th>End</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>Netherlands</td>
+      <td>2017</td>
       <td>0</td>
-      <td>469.0</td>
-      <td>3343.0</td>
-      <td>2606.0</td>
-      <td>2242.0</td>
+      <td>2017-01-01</td>
+      <td>2017-01-01</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Netherlands</td>
+      <td>2017</td>
       <td>1</td>
-      <td>3568.0</td>
-      <td>3359.0</td>
-      <td>3262.0</td>
-      <td>3364.0</td>
+      <td>2017-01-02</td>
+      <td>2017-01-08</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Netherlands</td>
+      <td>2017</td>
       <td>2</td>
-      <td>3637.0</td>
-      <td>3364.0</td>
-      <td>3150.0</td>
-      <td>3151.0</td>
+      <td>2017-01-09</td>
+      <td>2017-01-15</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Netherlands</td>
+      <td>2017</td>
       <td>3</td>
-      <td>3487.0</td>
-      <td>3322.0</td>
-      <td>3178.0</td>
-      <td>3040.0</td>
+      <td>2017-01-16</td>
+      <td>2017-01-22</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Netherlands</td>
+      <td>2017</td>
       <td>4</td>
-      <td>3626.0</td>
-      <td>3403.0</td>
-      <td>3143.0</td>
-      <td>3157.0</td>
+      <td>2017-01-23</td>
+      <td>2017-01-29</td>
     </tr>
     <tr>
       <th>...</th>
@@ -450,56 +455,50 @@ dates
       <td>...</td>
       <td>...</td>
       <td>...</td>
-      <td>...</td>
     </tr>
     <tr>
-      <th>100</th>
+      <th>419</th>
       <td>United Kingdom</td>
-      <td>47</td>
-      <td>10538.0</td>
-      <td>10033.0</td>
-      <td>10958.0</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>101</th>
-      <td>United Kingdom</td>
+      <td>2020</td>
       <td>48</td>
-      <td>10781.0</td>
-      <td>10287.0</td>
-      <td>10816.0</td>
-      <td>NaN</td>
+      <td>2020-11-28</td>
+      <td>2020-12-04</td>
     </tr>
     <tr>
-      <th>102</th>
+      <th>420</th>
       <td>United Kingdom</td>
+      <td>2020</td>
       <td>49</td>
-      <td>11217.0</td>
-      <td>10550.0</td>
-      <td>11188.0</td>
-      <td>NaN</td>
+      <td>2020-12-05</td>
+      <td>2020-12-11</td>
     </tr>
     <tr>
-      <th>103</th>
+      <th>421</th>
       <td>United Kingdom</td>
+      <td>2020</td>
       <td>50</td>
-      <td>12517.0</td>
-      <td>11116.0</td>
-      <td>11926.0</td>
-      <td>NaN</td>
+      <td>2020-12-12</td>
+      <td>2020-12-18</td>
     </tr>
     <tr>
-      <th>104</th>
+      <th>422</th>
       <td>United Kingdom</td>
+      <td>2020</td>
       <td>51</td>
-      <td>8487.0</td>
-      <td>7131.0</td>
-      <td>7533.0</td>
-      <td>NaN</td>
+      <td>2020-12-19</td>
+      <td>2020-12-25</td>
+    </tr>
+    <tr>
+      <th>423</th>
+      <td>United Kingdom</td>
+      <td>2020</td>
+      <td>52</td>
+      <td>2020-12-26</td>
+      <td>2020-12-31</td>
     </tr>
   </tbody>
 </table>
-<p>105 rows × 6 columns</p>
+<p>424 rows × 5 columns</p>
 </div>
 
 
