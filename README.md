@@ -261,11 +261,11 @@ for i, age in enumerate(ages):
         if i == len(ages) - 1:  axes[i, j].set_xlabel('Week')
             
 fig.suptitle('United Kingdom Deaths by Age and Sex')
+fig.savefig('../uk_deaths_by_age.png')
+plt.close()
 ```
 
-
-![png](docs/images/output_12_0.png)
-
+<img src="nbs/../uk_deaths_by_age.png">
 
 ### weekly_dates.csv
 
@@ -273,26 +273,12 @@ Week numbers differ by country: in the UK, the week ends on a Friday, in the Net
 
 ```python
 dates = pd.read_csv('../dataset/week_dates.csv')
-dates[dates.Week == 0]
+HTML(dates[dates.Week == 0].to_html())
 ```
 
 
 
 
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -371,135 +357,6 @@ dates[dates.Week == 0]
     </tr>
   </tbody>
 </table>
-</div>
-
-
-
-```python
-dates
-```
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Country</th>
-      <th>Year</th>
-      <th>Week</th>
-      <th>Start</th>
-      <th>End</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Netherlands</td>
-      <td>2017</td>
-      <td>0</td>
-      <td>2017-01-01</td>
-      <td>2017-01-01</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Netherlands</td>
-      <td>2017</td>
-      <td>1</td>
-      <td>2017-01-02</td>
-      <td>2017-01-08</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Netherlands</td>
-      <td>2017</td>
-      <td>2</td>
-      <td>2017-01-09</td>
-      <td>2017-01-15</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Netherlands</td>
-      <td>2017</td>
-      <td>3</td>
-      <td>2017-01-16</td>
-      <td>2017-01-22</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Netherlands</td>
-      <td>2017</td>
-      <td>4</td>
-      <td>2017-01-23</td>
-      <td>2017-01-29</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>419</th>
-      <td>United Kingdom</td>
-      <td>2020</td>
-      <td>48</td>
-      <td>2020-11-28</td>
-      <td>2020-12-04</td>
-    </tr>
-    <tr>
-      <th>420</th>
-      <td>United Kingdom</td>
-      <td>2020</td>
-      <td>49</td>
-      <td>2020-12-05</td>
-      <td>2020-12-11</td>
-    </tr>
-    <tr>
-      <th>421</th>
-      <td>United Kingdom</td>
-      <td>2020</td>
-      <td>50</td>
-      <td>2020-12-12</td>
-      <td>2020-12-18</td>
-    </tr>
-    <tr>
-      <th>422</th>
-      <td>United Kingdom</td>
-      <td>2020</td>
-      <td>51</td>
-      <td>2020-12-19</td>
-      <td>2020-12-25</td>
-    </tr>
-    <tr>
-      <th>423</th>
-      <td>United Kingdom</td>
-      <td>2020</td>
-      <td>52</td>
-      <td>2020-12-26</td>
-      <td>2020-12-31</td>
-    </tr>
-  </tbody>
-</table>
-<p>424 rows × 5 columns</p>
-</div>
 
 
 
